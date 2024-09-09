@@ -24,4 +24,4 @@ additionalGuests = 0
 
 additionalGuests = 1
 
-print("You will need", ((guests+students+staff)/12)+additionalGuests, "tables.")
+print("You will need", ((guests+students+staff)+additionalGuests)/12, "tables.")
