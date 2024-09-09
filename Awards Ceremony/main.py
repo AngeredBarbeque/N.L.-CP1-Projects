@@ -1,17 +1,19 @@
 #Nicholas Larsen Awards ceremony project
 
-missingStaff = 0
+missingStaff = 3
 
 staff = 32 - missingStaff
 
-missingStudents = 0
+missingStudents = 1
 
-students = 100 % missingStudents
+students = 100 - missingStudents
 
-missingGuests = 0
+missingGuests = 15
 
-guests = (students * 2) % missingGuests
+guests = (students * 2) - missingGuests
 
 tableSize = 12
 
-print("You will need", (guests+students+staff)/12)
+additionalGuests = 1
+
+print("You will need", ((guests+students+staff)/12)+additionalGuests, "tables.")
