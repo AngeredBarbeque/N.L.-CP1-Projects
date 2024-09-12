@@ -1,6 +1,6 @@
 #Nicholas Larsen Palindrome Checker
 
-word = input("What word would you like to check?")
+word = input("What phrase would you like to check?")
 
 if word [::-1] == word: 
     print("Yes, this is a palindrome. Loser.")
