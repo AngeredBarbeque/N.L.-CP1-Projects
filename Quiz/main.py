@@ -14,11 +14,11 @@ answerFive = input("In the book Frankenstein by Mary shelley, the main character
 
 points = 0
 
-if answerOne == "true": points = points+1 
-if answerTwo == "true": points = points+1
-if answerThree == "false": points = points+1
-if answerFour == "false": points = points+1
-if answerFive == "false": points = points+1
+if answerOne == "true": points += 1 
+if answerTwo == "true": points += 1
+if answerThree == "false": points += 1
+if answerFour == "false": points += 1
+if answerFive == "false": points += 1
 
 print("Your score out of 5 is", points)
 if points <= 2: print("Wow, you really suck at this, don't you?")
