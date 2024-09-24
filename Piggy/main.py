@@ -5,6 +5,6 @@ def piggyMode(word):
     length = len(word)
     N = length-1
     word = word[length-N:]
-    return(word + firstLet)
+    return(word + firstLet).title()
 
 print(piggyMode(word=input("What word would you like to convert?")))
