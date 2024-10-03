@@ -1,10 +1,11 @@
 #Nicholas Larsen
 
-what = input("would you like to convert, or unconvert?")
 plainText = input("What is your phrase?: ")
+what = input("Would you like to convert, or unconvert?")
 shift= int(input("How much would you like to shift it?"))
 
 cipherText = ""
+
 def conversion(shift, plainText, cipherText):
     for c in plainText.lower():
         c2 = ord(c) + shift
