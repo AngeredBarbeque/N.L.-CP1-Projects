@@ -24,6 +24,7 @@ def main():
             print("You ready yourself for a strike, but this thing is like nothing you've faced before. When it hits you, your armor is useless, and you flesh is eaten away by the acid. It hits again, this time hitting you in your head, and shooting pain")
             
         elif choice == "3":
+            print("y")
     else:
         print("Sorry, you entered something wrong. Try again.")
 
