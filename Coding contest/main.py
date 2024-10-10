@@ -28,8 +28,13 @@ def main():
                 exit()
             if choice == "2":
                 print("As you pull the lever, you hear creaking nearby. When you finish pulling the lever, you walk to the room on the right. There is now a open doorway to the next room.")
-                print("As you walk to the next room, you find yourself in a large, circular room. There's a pit of acid in the center, but nothing else of interest. Then, the pit begins to gurgle. This again. Spider in the pit")
-                
+                print("As you walk to the next room, you find yourself in a large, circular room. There's a pit of acid in the center, but nothing else of interest. Then, the pit begins to gurgle. This again. A thin, long leg emerges from the pit, followed by 7 more.\n Great. It's a giant spider. What will you do?:\n")
+                choice == input("Press 1 to use your sword\n Press 2 to use your shield to guard\n")
+                if choice == "1":
+                    print("You prepare to strike the creature, but before you can, it raises one leg, and strikes you straight through your chest. As you stumble to the floor, the acid eating away at your internal organs,\n you see the head of the spider lean down towards you, its jaws open before you black out.\n You have died.")
+                    exit()
+                elif choice == "2":
+                    print("In an effort to be safe, you raise your shield. The monster strikes your shield, puncturing it like nothing. Luckily it didn't hit you.\n You raise your sword, and drive the blade into the skull of the creature. The creature shrieks and writhes.\n It screeched in agony as it melted and seeped into the floor. As you prepare to leave, you notice something black and glistening on the ground.\n You feel drawn to it and pick it up. It seems to be the heart of that creature. Before you can admire it further, ")
         elif choice == "2":
             print("You ready yourself for a strike, but this thing is like nothing you've faced before. When it hits you, your armor is useless, and your flesh is eaten away by the acid. It hits again, this time hitting your head, and shooting pain splits your mind in two.\n You have died.")
             exit()
