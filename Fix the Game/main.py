@@ -9,6 +9,7 @@ def start_game():
     while not game_over:
         #You were taking guess as a string and trying to compare it to an integer. This is a runtime error.
         guess = (input("Enter your guess: "))
+        #If you entered anything but a number, the game would crash. This is a runtime error. You didn't include a exception handler.
         try:
             guess = int(guess)
         except:
