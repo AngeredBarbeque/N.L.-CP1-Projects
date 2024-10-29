@@ -1,5 +1,3 @@
-i = 0
-while i > 6:
-    break
-else: 
-    print("Howdy")
+i = 1
+if i == i:
+    print("loob")
