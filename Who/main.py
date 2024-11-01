@@ -2,7 +2,7 @@
 
 name = input("WHAT IS YOUR NAME, MORTAL?")
 
-age = input("HOW MANY YEARS HAVE YOU BEEN ON THIS PLANE OF EXISTENCE?")
+age = input("HOW MANY YEARS HAVE YOU EXISTED UPON THIS PLANE OF EXISTENCE?")
 
 color = input("WHAT IS YOUR favorite color?")
 
