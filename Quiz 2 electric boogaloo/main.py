@@ -66,5 +66,22 @@ else:
     print("C: 367")
     print("D: 200")
     answerFive = input("")
-    if 
+if answerFive == "D":
+    score +=1
 print("Your score was:", score)
+if answer == "C":
+    if answerTwo == "B":
+        if answerThree == "C":
+            if answerFour == "D":
+                if answerFive == "D":
+                    print("You got everything correct!")
+if answer != "C":
+    print("You got question 1 wrong.")
+if answerTwo != "B":
+    print("You got question 2 wrong.")
+if answerThree != "C":
+    print("You got question 3 wrong.")
+if answerFour != "D":
+    print("You got question 4 wrong.")
+if answerFive != "D":
+    print("You got question 5 wrong.")
