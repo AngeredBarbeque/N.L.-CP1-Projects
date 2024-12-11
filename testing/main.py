@@ -1,9 +1,6 @@
-global e
-e =1
-
-def fucntion():
-    global e 
-    e = 3
-
-fucntion()
-print(e)
+def test(a, b):
+    return a+b
+def testy():
+    test(1, 2)
+    return 1+2
+testy()

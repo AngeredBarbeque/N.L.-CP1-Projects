@@ -1,10 +1,10 @@
+import random
 global playerHP
 global playerAtk
 global playerDef
 global inventory
 global equipped
-global enemyHP
-global enemyAtk
+
 playerHP = 50
 playerDef = 5
 playerAtk = 5
@@ -26,12 +26,12 @@ def inventoryChoices():
         playerChoice = input("\nWelcome to your inventory!\n1:Equip new items(You can have multiple armor pieces, but only one weapon at a time.)\n2:Unequip items\n3:Exit\nChoose:")
         if playerChoice == '1':
             while True:
-                itemChoice = input("What item would you like to equip?").title()
+                itemChoice = input("\nWhat item would you like to equip?\nChoose:").title()
                 if itemChoice in equipped:
-                    print("Sorry, you already have that equipped. Try again!")
+                    print("\nSorry, you already have that equipped. Try again!")
                     break
                 if itemChoice not in inventory:
-                    print("Sorry, that's not a valid item.")
+                    print("\nSorry, that's not a valid item.")
                     break
                 elif itemChoice == 'Steel Shortsword':
                     playerAtk = 5
@@ -74,16 +74,16 @@ def inventoryChoices():
                     equipped.append(itemChoice)
                     break
                 else:
-                    print("Sorry, that's not a valid item. Try again.")
+                    print("\nSorry, that's not a valid item. Try again.")
                     break
         elif playerChoice == '2':
             while True:
                 itemChoice = input("What would you like to unequip?")
                 if itemChoice not in inventory:
-                    print("You don't have that item. Try again")
+                    print("\nYou don't have that item. Try again.")
                     break
                 elif itemChoice not in equipped:
-                    print("that item isn't equipped!")
+                    print("\nThat item isn't equipped!")
                     break
                 elif itemChoice == 'Steel Shortsword':
                     playerAtk -= 4
@@ -102,23 +102,97 @@ def inventoryChoices():
                     equipped.pop(equipped.index(itemChoice))
                     break
         elif playerChoice == '3':
-            print("Goodbye!")
+            print("\nGoodbye!")
             break
         else:
-            print("Wrong number, nincompoop.")
-def combat():
+            print("\nWrong number, nincompoop.")
+def combat(enemyHP, enemyAtk):
     global playerAtk
     global playerDef
     global inventory
     global playerHP
     while True:
-        playerChoice = input('What would you like to do?\n1:Attack\n2:Defend\n3:Item')
+        playerChoice = input('\nWhat would you like to do?\n1:Attack\n2:Defend\n3:Item\nChoose:')
         if playerChoice == '1':
-            enemyHP - playerAtk
+            enemyHP -= playerAtk
         elif playerChoice == '2':
             if enemyCharge == True:
                 enemyCharge = False
             continue
         elif playerChoice == '3':
                 while True:
-                    itemChoice = input("CONTINUE CODE FROM HERE!!!")
+                    print("\nYou have:")
+                    for item in inventory:
+                        print(item)
+                    itemChoice = input("\nWhat item do you want to use?\nChoose:").title
+                    if itemChoice == 'Healing Potion':
+                        inventory.pop(inventory.index(itemChoice))
+                        playerHP = 50
+                        break
+                    elif itemChoice == 'Amulet of Rage':
+                        inventory.pop(inventory.index(itemChoice))
+                        enraged = 2
+                        playerAtk += 3
+                        break
+                    else:
+                        print("\nThat item isn't valid.")
+                        continue
+        else:
+            print("\nWrong number, try again.")
+        enemyChoice = random.randint(1,2)
+        if enemyChoice == 1:
+            if enemyCharge == True:
+                playerHP -= (enemyAtk*2)-playerDef
+            else:
+                playerHP -= enemyAtk-playerDef
+        elif enemyChoice == 2:
+            enemyCharge = True
+        if playerHP == 0:
+            return "Failed"
+        elif enemyHP == 0:
+            return "Won"
+        else:
+            continue
+def death():
+    print("\nYou failed your mission and died. D:")
+    exit()
+def roomOne():
+    print("\n!!INSERT STORY INTRO HERE!!")
+    print("\n!!INSERT ROOM DESCRIPTION HERE!!")
+    while True:
+        playerChoice = input("\nWhat would you like to do?\n1:Go straight\n2:Go to the right\n3:Access inventory\nChoose:")
+        if playerChoice == '1':
+            roomTwo(inventory)
+        elif playerChoice == '2':
+            pass
+            #roomThree()
+        elif playerChoice == '3':
+            inventoryChoices()
+        else:
+            print("\nSorry, try again.")
+def roomTwo(inventory):
+    print("\n!!BATHROOM!!")
+    if potionGot == False:
+        print("\nBefore you can decide what to do next, you spot a potion in the medicine cabinet!\nHealing Potion obtained!")
+        inventory.append('Healing Potion')
+        potionGot = True
+    playerChoice = input("\nWhat would you like to do?\n1:Go straight\n2:Go right\n3:Access inventory\nChoose:")
+    if playerChoice == '1':
+        pass
+        #roomFour()
+    elif playerChoice == '2':
+        pass
+        #roomFive()
+    elif playerChoice == '3':
+        inventoryChoices()
+    else:
+        print("\nSorry, try again.")
+def roomThree():
+    print("\n!!TICKS!!")
+    outcome = combat(25, 10)
+    if outcome == 'Failed':
+        death()
+    elif outcome == 'Won':
+        print("\n!!TICKS DEAD!!")
+        print("\nYou grab a sword!!!CONTINUE HERE!!!")
+roomOne()
