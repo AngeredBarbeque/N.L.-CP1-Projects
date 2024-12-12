@@ -142,9 +142,9 @@ def combat(enemyHP, enemyAtk):
         enemyChoice = random.randint(1,2)
         if enemyChoice == 1:
             if enemyCharge == True:
-                playerHP -= (enemyAtk*2)-playerDef
+                playerHP -= ((enemyAtk*2)-playerDef)*round(random.random(0.7, 1), 2)
             else:
-                playerHP -= enemyAtk-playerDef
+                playerHP -= (enemyAtk-playerDef)*round(random.random(0.7, 1), 2)
         elif enemyChoice == 2:
             enemyCharge = True
         if playerHP == 0:
@@ -162,37 +162,107 @@ def roomOne():
     while True:
         playerChoice = input("\nWhat would you like to do?\n1:Go straight\n2:Go to the right\n3:Access inventory\nChoose:")
         if playerChoice == '1':
-            roomTwo(inventory)
+            roomTwo()
         elif playerChoice == '2':
-            pass
-            #roomThree()
+            roomThree()
         elif playerChoice == '3':
             inventoryChoices()
         else:
             print("\nSorry, try again.")
-def roomTwo(inventory):
+def roomTwo():
+    global inventory
     print("\n!!BATHROOM!!")
-    if potionGot == False:
-        print("\nBefore you can decide what to do next, you spot a potion in the medicine cabinet!\nHealing Potion obtained!")
-        inventory.append('Healing Potion')
-        potionGot = True
-    playerChoice = input("\nWhat would you like to do?\n1:Go straight\n2:Go right\n3:Access inventory\nChoose:")
-    if playerChoice == '1':
-        pass
-        #roomFour()
-    elif playerChoice == '2':
-        pass
-        #roomFive()
-    elif playerChoice == '3':
-        inventoryChoices()
-    else:
-        print("\nSorry, try again.")
+    print("\nBefore you can decide what to do next, you spot a potion in the medicine cabinet!\nHealing Potion obtained!")
+    inventory.append('Healing Potion')
+    while True:
+        playerChoice = input("\nWhat would you like to do?\n1:Go straight\n2:Go right\n3:Access inventory\nChoose:")
+        if playerChoice == '1':        
+            roomFour()
+        elif playerChoice == '2':
+            roomFive()
+        elif playerChoice == '3':
+            inventoryChoices()
+        else:
+            print("\nSorry, try again.")
 def roomThree():
+    global inventory
     print("\n!!TICKS!!")
     outcome = combat(25, 10)
     if outcome == 'Failed':
         death()
     elif outcome == 'Won':
         print("\n!!TICKS DEAD!!")
-        print("\nYou grab a sword!!!CONTINUE HERE!!!")
+        print("\nYou grab a sword from off the wall.\nTick Slaying Blade obtained!")
+        inventory.append('Tick Slaying Blade')
+        while True:    
+            playerChoice = input("What would you like to do?\n1:Go Left\n2:Go Straight\n3:Access Inventory\nChoose:")
+            if playerChoice == '1':
+                roomFive()
+            elif playerChoice == '2':
+                roomSix()
+            elif playerChoice == '3':
+                inventoryChoices()
+            else:
+                print("\nSorry, try again.")
+def roomFour():
+    print("\n!!SPIKES!!")
+    death()
+def roomFive():
+    print("\n!!DENTIST!!")
+    outcome = combat(40, 15)
+    if outcome == 'Failed':
+        death()
+    elif outcome == 'Won':
+        print("\n!!DEAD DENTIST!!")
+        while True:
+            playerChoice = input("What would you like to do?\n1:Go Left\n2:Go Straight\n3:Access Inventory\nChoose:")
+            if playerChoice == '1':
+                roomSix()
+            elif playerChoice == '2':
+                roomSeven()
+            elif playerChoice == '3':
+                inventoryChoices()
+            else:
+                print("\nSorry, try again.")
+def roomSix():
+    global inventory
+    print("!!!LAMP!!!")
+    outcome = combat(70, 10)
+    if outcome == 'Failed':
+        death()
+    elif outcome == 'Won':
+        print("\nAs the lamp falls to the floor, its outer rind forms into a rock hard chestplate.\nYou obtained Lemon Rind Chestplate!")
+        inventory.append("Lemon Rind Chestplate")
+        while True:
+            playerChoice = input("What would you like to do?\n1:Go Left\n2:Go Straight\n3:Access Inventory\nChoose:")
+            if playerChoice == '1':
+                roomSeven
+            elif playerChoice == '2':
+                roomEight
+            elif playerChoice == '3':
+                inventoryChoices()
+            else:
+                print("\nSorry, try again.")
+def roomSeven():
+    global playerHP 
+    print("You arrive at a room containing food, water and a bed.\nYou rested and recovered your health.")
+    playerHP = 50
+    while True:
+        playerChoice = input("What do you want to do?\n1:Go straight\n2:Go Right\n3:Access Inventory\nChoose:")
+        if playerChoice == '1':
+            roomNine()
+        elif playerChoice == '2':
+            roomEight()
+        elif playerChoice == '3':
+            inventoryChoices()
+        else:
+            print("\nSorry, try again.")
+def roomEight():
+    global inventory
+    print("!!GIRAFFE!!")
+    outcome = combat(10, 40)
+    if outcome == 'Failed':
+        death()
+    elif outcome == 'Won':
+        print("!!!!!!")
 roomOne()
