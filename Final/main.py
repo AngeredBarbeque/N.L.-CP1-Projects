@@ -107,6 +107,8 @@ def inventoryChoices():
         else:
             print("\nWrong number, nincompoop.")
 def combat(enemyHP, enemyAtk):
+    if enraged > 0:
+        enraged -= 1
     global playerAtk
     global playerDef
     global inventory
@@ -129,7 +131,7 @@ def combat(enemyHP, enemyAtk):
                         inventory.pop(inventory.index(itemChoice))
                         playerHP = 50
                         break
-                    elif itemChoice == 'Amulet of Rage':
+                    elif itemChoice == 'Amulet Of Rage':
                         inventory.pop(inventory.index(itemChoice))
                         enraged = 2
                         playerAtk += 3
@@ -264,5 +266,69 @@ def roomEight():
     if outcome == 'Failed':
         death()
     elif outcome == 'Won':
-        print("!!!!!!")
+        print("!GIRAFFE DEAD!")
+        print('Hanging from a hook on the wall is a wicked looking blade with a grumpy aura surrounding it. You pick it up.\n You obtained Blade of Angst!')
+        inventory.append('Blade of Angst')
+        while True:
+            playerChoice = input("What would you like to do?\n1:Go Left\n2:Go right\nAccess Inventory\nChoose:")
+            if playerChoice == '1':
+                roomNine()
+            elif playerChoice == '2':
+                roomTwelve()
+            elif playerChoice == '3':
+                inventoryChoices()
+            else:
+                print("\nSorry, Try again.")
+def roomNine():
+    global inventory
+    if roomCleared == True:
+        while True:
+            playerChoice = input("What would you like to do?\n1:Go straight\n2:Go right\n3:Access Inventory\nChoose:")
+            if playerChoice == '1':
+                roomTen()
+            elif playerChoice == '2':
+                roomThirteen()
+            elif playerChoice == '3':
+                inventoryChoices()
+            else:
+                print("\nSorry, try again.")
+    else:
+        print("!!!SOFA!!!")
+        outcome = combat(30, 30)
+        if outcome == 'Failed':
+            death()
+        elif outcome == 'Won':
+            roomCleared = True
+            print("!!!COUCH DEAD!!!")
+            print("After slaying the vicious sofa, you spot a gleam in between the cushions.\nYou obtained Amulet of Rage!")
+            inventory.append("Amulet Of Rage")
+            while True:
+                playerChoice = input("What would you like to do?\n1:Look around\n2:Go Right\n3:Access Inventory\nChoose:")
+                if playerChoice == '1':
+                    print("As you look around the room, you realize that one of the walls is fake! You push the wall over to reveal a secret room!")
+                    roomTen()
+                elif playerChoice == '2':
+                    roomThirteen()
+                elif playerChoice == '3':
+                    inventoryChoices()
+                else:
+                    print("\nSorry, try again.")
+def roomTen():
+    global inventory
+    if bootGot  == False:
+        print("As you enter the room, you spot some glowing boots.\nYou got Radical Boots!")
+        inventory.append("Radical Boots")
+        bootGot = True
+    while True:
+        playerChoice = input("What would you like to do?\n1:Go back\n2:Go Left\n3:Access Inventory\nChoose:")
+        if playerChoice == '1':
+            roomNine()
+        elif playerChoice == '2':
+            roomThirteen()
+        elif playerChoice == '3':
+            inventoryChoices()
+        else:
+            print("\nSorry, try again.")
+def roomEleven():
+
 roomOne()

@@ -1,6 +1,6 @@
-def test(a, b):
-    return a+b
-def testy():
-    test(1, 2)
-    return 1+2
-testy()
+global x
+x = 23
+def add(y):
+    x += y
+add(5)
+print(x)
