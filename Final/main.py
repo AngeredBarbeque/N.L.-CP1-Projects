@@ -4,12 +4,15 @@ global playerAtk
 global playerDef
 global inventory
 global equipped
-
-playerHP = 50
+global roomNineCleared
+global roomTwelveCleared
+playerHP = 100
 playerDef = 5
 playerAtk = 5
 inventory = ['Steel Shortsword', 'Tin Helmet', 'Blade Of Angst']
 equipped = ['Steel Shortsword', 'Tin Helmet']
+roomNineCleared = False
+roomTwelveCleared = False
 
 def inventoryChoices():
     global playerAtk
@@ -34,7 +37,7 @@ def inventoryChoices():
                     print("\nSorry, that's not a valid item.")
                     break
                 elif itemChoice == 'Steel Shortsword':
-                    playerAtk = 5
+                    playerAtk = 10
                     try: 
                         equipped.pop(equipped.index('Tick Slaying Blade'))
                     except:
@@ -46,7 +49,7 @@ def inventoryChoices():
                     equipped.append("Steel Shortsword")
                     break
                 elif itemChoice == 'Tick Slaying Blade':
-                    playerAtk = 7
+                    playerAtk = 15
                     try: 
                         equipped.pop(equipped.index('Steel Shortsword'))
                     except:
@@ -58,7 +61,7 @@ def inventoryChoices():
                     equipped.append("Tick Slaying Blade")
                     break
                 elif itemChoice == 'Blade Of Angst':
-                    playerAtk = 10
+                    playerAtk = 20
                     try: 
                         equipped.pop(equipped.index('Tick Slaying Blade'))
                     except:
@@ -86,15 +89,15 @@ def inventoryChoices():
                     print("\nThat item isn't equipped!")
                     break
                 elif itemChoice == 'Steel Shortsword':
-                    playerAtk -= 4
+                    playerAtk -= 9
                     equipped.pop(equipped.index(itemChoice))
                     break
                 elif itemChoice == 'Tick Slaying Blade':
-                    playerAtk -= 6
+                    playerAtk -= 14
                     equipped.pop(equipped.index(itemChoice))
                     break
                 elif itemChoice == 'Blade Of Angst':
-                    playerAtk -= 9
+                    playerAtk -= 19
                     equipped.pop(equipped.index(itemChoice))
                     break
                 elif itemChoice == 'Tin Helmet' or itemChoice == 'Radical Boots' or itemChoice == 'Lemon Rind Chestplate':
@@ -107,16 +110,19 @@ def inventoryChoices():
         else:
             print("\nWrong number, nincompoop.")
 def combat(enemyHP, enemyAtk):
-    if enraged > 0:
-        enraged -= 1
+    enemyCharge = False
     global playerAtk
     global playerDef
     global inventory
     global playerHP
     while True:
+        if enemyCharge == True:
+            print("\nYour enemy seems to be charging up.")
+        print("\nYour opponent has:", enemyHP, "health points left.")
+        print("\nYou have:", playerHP, "health points left.")
         playerChoice = input('\nWhat would you like to do?\n1:Attack\n2:Defend\n3:Item\nChoose:')
         if playerChoice == '1':
-            enemyHP -= playerAtk
+            enemyHP -= round((playerAtk)*round(random.uniform(0.7, 1), 2))
         elif playerChoice == '2':
             if enemyCharge == True:
                 enemyCharge = False
@@ -126,15 +132,16 @@ def combat(enemyHP, enemyAtk):
                     print("\nYou have:")
                     for item in inventory:
                         print(item)
-                    itemChoice = input("\nWhat item do you want to use?\nChoose:").title
+                    itemChoice = input("\nWhat item do you want to use?\nType exit to leave.\nChoose:").title()
                     if itemChoice == 'Healing Potion':
                         inventory.pop(inventory.index(itemChoice))
                         playerHP = 50
                         break
                     elif itemChoice == 'Amulet Of Rage':
                         inventory.pop(inventory.index(itemChoice))
-                        enraged = 2
                         playerAtk += 3
+                        break
+                    elif itemChoice == 'Exit':
                         break
                     else:
                         print("\nThat item isn't valid.")
@@ -144,14 +151,14 @@ def combat(enemyHP, enemyAtk):
         enemyChoice = random.randint(1,2)
         if enemyChoice == 1:
             if enemyCharge == True:
-                playerHP -= ((enemyAtk*2)-playerDef)*round(random.random(0.7, 1), 2)
+                playerHP -= round(((enemyAtk*2)-playerDef)*round(random.uniform(0.5, 1), 2))
             else:
-                playerHP -= (enemyAtk-playerDef)*round(random.random(0.7, 1), 2)
+                playerHP -= round((enemyAtk-playerDef)*round(random.uniform(0.5, 1), 2))
         elif enemyChoice == 2:
             enemyCharge = True
-        if playerHP == 0:
+        if playerHP <= 0:
             return "Failed"
-        elif enemyHP == 0:
+        elif enemyHP <= 0:
             return "Won"
         else:
             continue
@@ -267,10 +274,10 @@ def roomEight():
         death()
     elif outcome == 'Won':
         print("!GIRAFFE DEAD!")
-        print('Hanging from a hook on the wall is a wicked looking blade with a grumpy aura surrounding it. You pick it up.\n You obtained Blade of Angst!')
+        print('Hanging from a hook on the wall is a wicked looking blade with a grumpy aura surrounding it. You pick it up.\nYou obtained Blade of Angst!')
         inventory.append('Blade of Angst')
         while True:
-            playerChoice = input("What would you like to do?\n1:Go Left\n2:Go right\nAccess Inventory\nChoose:")
+            playerChoice = input("What would you like to do?\n1:Go Left\n2:Go right\n3:Access Inventory\nChoose:")
             if playerChoice == '1':
                 roomNine()
             elif playerChoice == '2':
@@ -281,7 +288,8 @@ def roomEight():
                 print("\nSorry, Try again.")
 def roomNine():
     global inventory
-    if roomCleared == True:
+    global roomNineCleared
+    if roomNineCleared == True:
         while True:
             playerChoice = input("What would you like to do?\n1:Go straight\n2:Go right\n3:Access Inventory\nChoose:")
             if playerChoice == '1':
@@ -298,7 +306,7 @@ def roomNine():
         if outcome == 'Failed':
             death()
         elif outcome == 'Won':
-            roomCleared = True
+            roomNineCleared = True
             print("!!!COUCH DEAD!!!")
             print("After slaying the vicious sofa, you spot a gleam in between the cushions.\nYou obtained Amulet of Rage!")
             inventory.append("Amulet Of Rage")
@@ -330,5 +338,58 @@ def roomTen():
         else:
             print("\nSorry, try again.")
 def roomEleven():
-
+    global inventory
+    if potionGot  == False:
+        print("As you enter the room, you spot a potion.\nYou got Potion Of Healing!")
+        inventory.append("Potion Of Healing")
+        potionGot = True
+    while True:
+        playerChoice = input("What would you like to do?\n1:Go back\n2:Go Left\n3:Access Inventory\nChoose:")
+        if playerChoice == '1':
+            roomTwelve()
+        elif playerChoice == '2':
+            roomThirteen()
+        elif playerChoice == '3':
+            inventoryChoices()
+        else:
+            print("\nSorry, try again.")
+def roomTwelve():
+    global roomTwelveCleared
+    if roomTwelveCleared == True:
+        while True:
+            playerChoice = input("What would you like to do?\n1:Look around\n2:Go Left\n3:Access Inventory\nChoose:")
+            if playerChoice == '1':
+                print("!!!Found Room!!!")
+                roomEleven()
+            elif playerChoice == '2':
+                roomThirteen()
+            elif playerChoice == '3':
+                inventoryChoices()
+            else:
+                print("\nSorry, try again.")
+    else:
+        print("!!Goat!!")
+        outcome = combat(30, 5)
+        if outcome == 'Failed':
+            death()
+        elif outcome == "Won":
+            print("!!!!YOU DID IT!!!!")
+            roomTwelveCleared = True
+            playerChoice = input("What would you like to do?\n1:Look around\n2:Go Left\n3:Access Inventory\nChoose:")
+            if playerChoice == '1':
+                print("!!!Found Room!!!")
+                roomEleven()
+            elif playerChoice == '2':
+                roomThirteen()
+            elif playerChoice == '3':
+                inventoryChoices()
+            else:
+                print("\nSorry, try again.")
+def roomThirteen():
+    print("!!!BOSS TEXT!!!")
+    outcome = combat(50, 50)
+    if outcome == 'Failed':
+        death()
+    elif outcome == 'Won':
+        print("!!!GAME WIN!!!")
 roomOne()
