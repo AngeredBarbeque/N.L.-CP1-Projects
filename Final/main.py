@@ -245,9 +245,9 @@ def roomSix():
         while True:
             playerChoice = input("What would you like to do?\n1:Go Left\n2:Go Straight\n3:Access Inventory\nChoose:")
             if playerChoice == '1':
-                roomSeven
+                roomSeven()
             elif playerChoice == '2':
-                roomEight
+                roomEight()
             elif playerChoice == '3':
                 inventoryChoices()
             else:
