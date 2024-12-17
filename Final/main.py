@@ -6,13 +6,17 @@ global inventory
 global equipped
 global roomNineCleared
 global roomTwelveCleared
+global bootGot
+global potionGot
 playerHP = 100
 playerDef = 5
 playerAtk = 5
-inventory = ['Steel Shortsword', 'Tin Helmet', 'Blade Of Angst']
+inventory = ['Steel Shortsword', 'Tin Helmet']
 equipped = ['Steel Shortsword', 'Tin Helmet']
 roomNineCleared = False
 roomTwelveCleared = False
+bootGot = False
+potionGot = False
 
 def inventoryChoices():
     global playerAtk
@@ -81,7 +85,7 @@ def inventoryChoices():
                     break
         elif playerChoice == '2':
             while True:
-                itemChoice = input("What would you like to unequip?")
+                itemChoice = input("What would you like to unequip?").title()
                 if itemChoice not in inventory:
                     print("\nYou don't have that item. Try again.")
                     break
@@ -135,7 +139,7 @@ def combat(enemyHP, enemyAtk):
                     itemChoice = input("\nWhat item do you want to use?\nType exit to leave.\nChoose:").title()
                     if itemChoice == 'Healing Potion':
                         inventory.pop(inventory.index(itemChoice))
-                        playerHP = 50
+                        playerHP = 100
                         break
                     elif itemChoice == 'Amulet Of Rage':
                         inventory.pop(inventory.index(itemChoice))
@@ -150,10 +154,17 @@ def combat(enemyHP, enemyAtk):
             print("\nWrong number, try again.")
         enemyChoice = random.randint(1,2)
         if enemyChoice == 1:
+            
             if enemyCharge == True:
-                playerHP -= round(((enemyAtk*2)-playerDef)*round(random.uniform(0.5, 1), 2))
+                dmg = round(((enemyAtk*2)-playerDef)*round(random.uniform(0.5, 1), 2))
+                if dmg <= 0:
+                    dmg = 0
+                playerHP -= dmg
             else:
-                playerHP -= round((enemyAtk-playerDef)*round(random.uniform(0.5, 1), 2))
+                dmg = round((enemyAtk-playerDef)*round(random.uniform(0.5, 1), 2))
+                if dmg <= 0:
+                    dmg = 0
+                playerHP -= dmg
         elif enemyChoice == 2:
             enemyCharge = True
         if playerHP <= 0:
@@ -166,8 +177,8 @@ def death():
     print("\nYou failed your mission and died. D:")
     exit()
 def roomOne():
-    print("\n!!INSERT STORY INTRO HERE!!")
-    print("\n!!INSERT ROOM DESCRIPTION HERE!!")
+    print("\nYou are a slime named Beeyor.\nYour Mother's dog walker's dog walker's dog has a brain tumour, and you have been asked to retrieve a vial of the cure hidden in Wilson's dungeon,\nnamed after the legendary Wilson who first conquered it.\nYou will brave many dangers in order to fight Barry the Businessman, who guards the cure to the tumours.")
+    print("\nAs you step off the ladder, you find yourself in a dark room with dank, smelly walls and nothing else of interest.\n")
     while True:
         playerChoice = input("\nWhat would you like to do?\n1:Go straight\n2:Go to the right\n3:Access inventory\nChoose:")
         if playerChoice == '1':
@@ -180,7 +191,7 @@ def roomOne():
             print("\nSorry, try again.")
 def roomTwo():
     global inventory
-    print("\n!!BATHROOM!!")
+    print("\nBefore you even enter the room, a pungent and unplesant aroma asaults your nose.\nIt would seem you find yourself in an ill-used and even less often cleaned bathroom.")
     print("\nBefore you can decide what to do next, you spot a potion in the medicine cabinet!\nHealing Potion obtained!")
     inventory.append('Healing Potion')
     while True:
@@ -195,13 +206,13 @@ def roomTwo():
             print("\nSorry, try again.")
 def roomThree():
     global inventory
-    print("\n!!TICKS!!")
+    print("\nAs you walk through the seemingly empty room, a large tick about the size of a stove jumps out at you!")
     outcome = combat(25, 10)
     if outcome == 'Failed':
         death()
     elif outcome == 'Won':
-        print("\n!!TICKS DEAD!!")
-        print("\nYou grab a sword from off the wall.\nTick Slaying Blade obtained!")
+        print("\n!As you pull your sword out of the tick's corpse, you notice something.")
+        print("\nYou grab a sword from off a hook on the wall.\nTick Slaying Blade obtained!")
         inventory.append('Tick Slaying Blade')
         while True:    
             playerChoice = input("What would you like to do?\n1:Go Left\n2:Go Straight\n3:Access Inventory\nChoose:")
@@ -214,15 +225,15 @@ def roomThree():
             else:
                 print("\nSorry, try again.")
 def roomFour():
-    print("\n!!SPIKES!!")
+    print("\nIn your haste, you step into the room, only to discover it's filled with a deadly spike pit.")
     death()
 def roomFive():
-    print("\n!!DENTIST!!")
+    print("\nIn the center of the room, a man in a chair turns to look at you. Gadzooks!\n It would seem an evil dentist desires a brawl!")
     outcome = combat(40, 15)
     if outcome == 'Failed':
         death()
     elif outcome == 'Won':
-        print("\n!!DEAD DENTIST!!")
+        print("\nWith a final strike, the evil dentist disolves into toothpaste.")
         while True:
             playerChoice = input("What would you like to do?\n1:Go Left\n2:Go Straight\n3:Access Inventory\nChoose:")
             if playerChoice == '1':
@@ -235,7 +246,7 @@ def roomFive():
                 print("\nSorry, try again.")
 def roomSix():
     global inventory
-    print("!!!LAMP!!!")
+    print("This room is lit with a beautiful lamp in the shape of an oversized lemon. As you admire the lamp, you realize this is not a lamp at all,\nrather an enemy encounter!")
     outcome = combat(70, 10)
     if outcome == 'Failed':
         death()
@@ -255,7 +266,7 @@ def roomSix():
 def roomSeven():
     global playerHP 
     print("You arrive at a room containing food, water and a bed.\nYou rested and recovered your health.")
-    playerHP = 50
+    playerHP = 100
     while True:
         playerChoice = input("What do you want to do?\n1:Go straight\n2:Go Right\n3:Access Inventory\nChoose:")
         if playerChoice == '1':
@@ -268,14 +279,14 @@ def roomSeven():
             print("\nSorry, try again.")
 def roomEight():
     global inventory
-    print("!!GIRAFFE!!")
+    print("When you carefully sneak into the room, you notice a depressed looking giraffe sulking in the corner.\n Before you can decide what to do, it turns it's head to look at you.")
     outcome = combat(10, 40)
     if outcome == 'Failed':
         death()
     elif outcome == 'Won':
-        print("!GIRAFFE DEAD!")
+        print("You hit the giraffe square in the neck, defeating it! Dejected, it hobbles back to its corner.")
         print('Hanging from a hook on the wall is a wicked looking blade with a grumpy aura surrounding it. You pick it up.\nYou obtained Blade of Angst!')
-        inventory.append('Blade of Angst')
+        inventory.append('Blade Of Angst')
         while True:
             playerChoice = input("What would you like to do?\n1:Go Left\n2:Go right\n3:Access Inventory\nChoose:")
             if playerChoice == '1':
@@ -301,13 +312,13 @@ def roomNine():
             else:
                 print("\nSorry, try again.")
     else:
-        print("!!!SOFA!!!")
+        print("Wow! A lovely sofa sits in the center of the room. As you prepare to take a rest on the wonderful piece of furniture, it shakes.\nThen it shakes more. It would seem this is a haunted sofa!")
         outcome = combat(30, 30)
         if outcome == 'Failed':
             death()
         elif outcome == 'Won':
             roomNineCleared = True
-            print("!!!COUCH DEAD!!!")
+            print("With a twinge of regret, you stare at the torn cushions of the once-beautiful sofa.")
             print("After slaying the vicious sofa, you spot a gleam in between the cushions.\nYou obtained Amulet of Rage!")
             inventory.append("Amulet Of Rage")
             while True:
@@ -323,6 +334,7 @@ def roomNine():
                     print("\nSorry, try again.")
 def roomTen():
     global inventory
+    global bootGot
     if bootGot  == False:
         print("As you enter the room, you spot some glowing boots.\nYou got Radical Boots!")
         inventory.append("Radical Boots")
@@ -339,6 +351,7 @@ def roomTen():
             print("\nSorry, try again.")
 def roomEleven():
     global inventory
+    global potionGot
     if potionGot  == False:
         print("As you enter the room, you spot a potion.\nYou got Potion Of Healing!")
         inventory.append("Potion Of Healing")
@@ -359,7 +372,7 @@ def roomTwelve():
         while True:
             playerChoice = input("What would you like to do?\n1:Look around\n2:Go Left\n3:Access Inventory\nChoose:")
             if playerChoice == '1':
-                print("!!!Found Room!!!")
+                print("As you look around the room, you realize that one of the walls is fake! You push the wall over to reveal a secret room!")
                 roomEleven()
             elif playerChoice == '2':
                 roomThirteen()
@@ -368,16 +381,16 @@ def roomTwelve():
             else:
                 print("\nSorry, try again.")
     else:
-        print("!!Goat!!")
+        print("You enter the room, only to be attacked by what seems to be a goat wearing a graduation cap!")
         outcome = combat(30, 5)
         if outcome == 'Failed':
             death()
         elif outcome == "Won":
-            print("!!!!YOU DID IT!!!!")
+            print("with a swipe of your sword, you knock the hat off of the goat's head.\nDisappointed, it wanders away.")
             roomTwelveCleared = True
             playerChoice = input("What would you like to do?\n1:Look around\n2:Go Left\n3:Access Inventory\nChoose:")
             if playerChoice == '1':
-                print("!!!Found Room!!!")
+                print("As you look around the room, you realize that one of the walls is fake! You push the wall over to reveal a secret room!")
                 roomEleven()
             elif playerChoice == '2':
                 roomThirteen()
@@ -386,10 +399,11 @@ def roomTwelve():
             else:
                 print("\nSorry, try again.")
 def roomThirteen():
-    print("!!!BOSS TEXT!!!")
-    outcome = combat(50, 50)
+    print("You're finally here. The lair of Barry the Businessman. Time to end this.")
+    outcome = combat(80, 40)
     if outcome == 'Failed':
         death()
     elif outcome == 'Won':
-        print("!!!GAME WIN!!!")
+        print("You did it! Congratulations! You have successfully cured the tumours and brought peace to your mother's dog walker's dog walker's dog!")
+        exit()
 roomOne()
